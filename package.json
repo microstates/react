@@ -2,11 +2,20 @@
   "name": "@microstates/react",
   "version": "0.1.0",
   "description": "Microstates Connect Component for React",
-  "main": "src/index.js",
   "scripts": {
+    "build": "rollup --config",
+    "prepare": "npm test",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "start": "jest --watch"
   },
+  "main": "dist/@microstates/react.umd.js",
+  "module": "dist/@microstates/react.js",
+  "browser": "dist/@microstates/react.umd.js",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/microstates/react.git"
@@ -14,7 +23,9 @@
   "keywords": [
     "react",
     "microstates",
-    "state-management"
+    "state-management",
+    "statecharts",
+    "finite-state-machine"
   ],
   "author": "Taras Mankovski <taras@thisdot.co>",
   "license": "MIT",
@@ -23,22 +34,38 @@
   },
   "homepage": "https://github.com/microstates/react#readme",
   "devDependencies": {
-    "babel-jest": "21.2.0",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-decorators-legacy": "1.3.4",
-    "babel-plugin-transform-react-jsx": "6.24.1",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-react": "6.24.1",
-    "jest": "21.2.1",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/preset-react": "^7.0.0-beta.40",
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "22.4.1",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "jest": "22.4.2",
     "react": "16.2.0",
     "react-dom": "16.2.0",
-    "react-test-renderer": "16.2.0"
+    "rollup": "0.56.3",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
+    "rollup-plugin-filesize": "1.5.0",
+    "rxjs": "6.0.0-alpha.3"
+  },
+  "peerDependencies": {
+    "react": "16.2.0",
+    "react-dom": "16.2.0"
   },
   "dependencies": {
-    "microstates": "0.3.0"
+    "microstates": "^0.6.1",
+    "funcadelic": "0.3.2"
   },
   "jest": {
-    "testRegex": "(/tests/.*|\\.(test|spec))\\.(js|jsx)$",
+    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
+    "testRegex": "(/tests/.*-test)\\.js$",
+    "globalSetup": "./build.js",
+    "watchPathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ],
     "moduleFileExtensions": [
       "js",
       "jsx"
@@ -47,8 +74,8 @@
       "<rootDir>/src",
       "<rootDir>/node_modules"
     ],
-    "transformIgnorePatterns": [
-      "/node_modules/(?!funcadelic)"
-    ]
+    "moduleNameMapper": {
+      "@microstates/react": "<rootDir>/dist/@microstates/react.umd.js"
+    }
   }
 }
