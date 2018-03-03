@@ -4,11 +4,10 @@ import Microstates from "@microstates/react";
 import { mount } from "../setupTests";
 
 describe("children invocation", () => {
-  let state, actions;
+  let state;
 
-  const children = (_state, _actions) => {
-    state = _state;
-    actions = _actions;
+  const children = next => {
+    state = next;
     return null;
   };
 
@@ -20,9 +19,9 @@ describe("children invocation", () => {
     );
 
     it("sends state and actions to children", () => {
-      expect(state).toBe(0);
-      expect(actions).toMatchObject({
-        increment: expect.any(Function)
+      expect(state).toMatchObject({
+        increment: expect.any(Function),
+        state: 0
       });
     });
   });
@@ -35,9 +34,9 @@ describe("children invocation", () => {
     );
 
     it("sends state and actions to children", () => {
-      expect(state).toBe(42);
-      expect(actions).toMatchObject({
-        increment: expect.any(Function)
+      expect(state).toMatchObject({
+        increment: expect.any(Function),
+        state: 42
       });
     });
   });

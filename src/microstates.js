@@ -28,11 +28,10 @@ export default class Microstates extends PureComponent {
   }
 
   onNext = next => {
-    let state = { actions: next, state: next.state };
     if (this.state) {
-      this.setState(state);
+      this.setState({ next });
     } else {
-      this.state = state;
+      this.state = { next };
     }
   };
 
@@ -40,11 +39,11 @@ export default class Microstates extends PureComponent {
     let { children, render } = this.props;
 
     if (render && render.call && this.state) {
-      return render(this.state.state, this.state.actions);      
+      return render(this.state.next);      
     }
 
     if (children && children.call && this.state) {
-      return children(this.state.state, this.state.actions);
+      return children(this.state.next);
     }
 
     return null;
