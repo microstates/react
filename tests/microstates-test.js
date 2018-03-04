@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import Microstates from "@microstates/react";
-import { stubConsoleError, mount } from '../setupTests';
+import { stubConsoleError } from "../setupTests";
 import { mount as mountComponent } from "enzyme";
 
 it("exports Microstates", function() {
@@ -9,7 +9,6 @@ it("exports Microstates", function() {
 });
 
 describe("Validation", () => {
-  
   stubConsoleError();
 
   it("throws an exception when rendered without providing a type", () => {
@@ -22,16 +21,9 @@ describe("Validation", () => {
 
   it("throws an exception when render is not a function", () => {
     expect(() => {
-      mountComponent(
-        <Microstates Type={Number} render={<div />} />
-      );
+      mountComponent(<Microstates Type={Number} render={<div />} />);
     }).toThrowError(
       /Failed prop type: Invalid prop `render` of type `object` supplied to `Microstates`, expected `function`/
     );
   });
-
-});
-
-describe('onChange', () => {
-
 });

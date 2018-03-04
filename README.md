@@ -123,6 +123,29 @@ function App() {
 }
 ```
 
+## onChange(nextValue: any)
+
+`onChange` prop can be used to receive the serialized value of the microstate after every state transition.
+
+```js
+import Microstates from "@microstates/react";
+
+function App() {
+  return (
+    <Microstates type={Number} value={42} onChange={value => console.log(value)}>
+      {number => {
+        return (
+          <div>
+            <span class="value">{number.state}</span>
+            <button onClick={() => number.increment()}>Increment</button>
+          </div>
+        );
+      }}
+    </Microstates>
+  );
+}
+```
+
 ## Credits
 
 Big thanks to Jamie Kyle for [create-react-context](https://github.com/jamiebuilds/create-react-context) package that provides the React Context API Polyfill. 

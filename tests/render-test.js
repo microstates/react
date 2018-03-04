@@ -54,3 +54,23 @@ describe('context', function() {
     expect(component.mounted.text()).toBe("42");
   });
 });
+
+describe("onChange invocation", () => {
+  let onChange = jest.fn();
+  let component = {};
+  mount(
+    <Microstates
+      type={Number}
+      value={42}
+      onChange={onChange}
+      render={m => <button onClick={() => m.increment()}>Increment</button>}
+    />,
+    component
+  );
+  beforeEach(() => {
+    component.mounted.find("button").simulate("click");
+  });
+  it("sent next value to onChange", function() {
+    expect(onChange).toHaveBeenCalledWith(43);
+  });
+});

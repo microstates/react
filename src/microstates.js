@@ -14,7 +14,8 @@ export default class Microstates extends PureComponent {
     type: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     render: PropTypes.func,
-    value: PropTypes.any
+    value: PropTypes.any,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -43,6 +44,10 @@ export default class Microstates extends PureComponent {
   onNext = next => {
     if (this.state) {
       this.setState({ next });
+      let { onChange } = this.props;
+      if (onChange && onChange.call) {
+        onChange(next.valueOf());
+      }
     } else {
       this.state = { next };
     }
