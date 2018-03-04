@@ -22,18 +22,6 @@ describe("Validation", () => {
   it("throws an exception when children is not a function", () => {
     expect(() => {
       mount(
-        <Microstates type={Number}>
-          <div />
-        </Microstates>
-      );
-    }).toThrowError(
-      /Failed prop type: Invalid prop `children` of type `object` supplied to `Microstates`, expected `function`/
-    );
-  });
-
-  it("throws an exception when children is not a function", () => {
-    expect(() => {
-      mount(
         <Microstates type={Number} render={<div />} />
       );
     }).toThrowError(

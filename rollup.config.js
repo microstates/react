@@ -9,7 +9,8 @@ const globals = {
   'react': 'React',
   'prop-types': 'PropTypes',
   'rxjs': 'RxJS',
-  'microstates': 'Microstates'
+  'microstates': 'Microstates',
+  'create-react-context': 'createReactContext'
 };
 
 module.exports = {

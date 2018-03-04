@@ -1,13 +1,17 @@
-import { PureComponent } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Observable } from "rxjs";
 import { create } from "microstates";
+import createReactContext from 'create-react-context';
 
+const Context = createReactContext(null);
+
+export const { Consumer } = Context;
 export default class Microstates extends PureComponent {
 
   static propTypes = {
     Type: PropTypes.func.isRequired,
-    children: PropTypes.func,
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     render: PropTypes.func,
     value: PropTypes.any
   };
@@ -42,10 +46,12 @@ export default class Microstates extends PureComponent {
       return render(this.state.next);      
     }
 
-    if (children && children.call && this.state) {
-      return children(this.state.next);
-    }
+    let value = this.state && this.state.next;
 
-    return null;
+    return (
+      <Context.Provider value={value}>
+        {children && children.call ? children(value) : children}
+      </Context.Provider>
+    );
   }
 }
