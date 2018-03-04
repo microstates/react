@@ -1,7 +1,7 @@
 import "jest";
 import React from "react";
 import Microstates from "@microstates/react";
-import { stubConsoleError } from '../setupTests';
+import { stubConsoleError, mount } from '../setupTests';
 import { mount as mountComponent } from "enzyme";
 
 it("exports Microstates", function() {
@@ -29,5 +29,9 @@ describe("Validation", () => {
       /Failed prop type: Invalid prop `render` of type `object` supplied to `Microstates`, expected `function`/
     );
   });
+
+});
+
+describe('onChange', () => {
 
 });

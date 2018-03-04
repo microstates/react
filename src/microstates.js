@@ -51,12 +51,16 @@ export default class Microstates extends PureComponent {
   render() {
     let { children, render } = this.props;
 
-    if (render && render.call && this.state) {
-      return render(this.state.next);      
-    }
-
     let value = this.state && this.state.next;
 
+    if (render && render.call) {
+      return (
+        <Context.Provider value={value}>
+          {render(value)}
+        </Context.Provider>
+      )
+    }
+    
     return (
       <Context.Provider value={value}>
         {children && children.call ? children(value) : children}

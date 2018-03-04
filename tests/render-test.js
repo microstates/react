@@ -1,6 +1,6 @@
 import "jest";
 import React from "react";
-import Microstates from "@microstates/react";
+import Microstates, { Consumer } from "@microstates/react";
 import { mount } from "../setupTests";
 
 let state;
@@ -35,6 +35,21 @@ describe("children invocation with value", function() {
 describe('using type instead of Type', () => {
   let component = {};
   mount(<Microstates type={Number} value={42} render={m => m.state} />, component);
+  it('can use type argument instead of Type', () => {
+    expect(component.mounted.text()).toBe("42");
+  });
+});
+
+describe('context', function() {
+  let component = {};
+  function Counter() {
+    return (
+      <Consumer>
+        {m => m.state}
+      </Consumer>
+    )
+  }
+  mount(<Microstates type={Number} value={42} render={() => <Counter />} />, component);
   it('can use type argument instead of Type', () => {
     expect(component.mounted.text()).toBe("42");
   });
