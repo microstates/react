@@ -123,3 +123,6 @@ function App() {
 }
 ```
 
+## Credits
+
+Big thanks to Jamie Kyle for [create-react-context](https://github.com/jamiebuilds/create-react-context) package that provides the React Context API Polyfill. 
