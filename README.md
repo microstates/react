@@ -18,6 +18,10 @@ yarn add @microstates/react
 
 This library provides a component that takes a Microstates model type and creates an instance of the given type. The instance will be sent to one the following: `children` function, props `render` function or a context consumer.
 
+### <Microstates type={Type} value={any} render={fn} />
+
+Microstates component takes type and value arguments. Type is a class definition that describes the structure of the data. The component will instantiate this class and provide an instance. The `value` prop is used to provide initial value for the Microstates model. 
+
 ### `children` function
 
 ```js
@@ -109,8 +113,7 @@ function App() {
       {model => {
         return (
           <div>
-            <span class="value">{number.state}</span>
-            <button onClick={() => number.increment()}>Increment</button>
+            <button onClick={() => model.modal.isOpen.toggle()}>Toggle Modal</button>
             <Modal>
           </div>
         );
@@ -119,3 +122,4 @@ function App() {
   );
 }
 ```
+
