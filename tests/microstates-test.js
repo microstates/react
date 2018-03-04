@@ -1,27 +1,29 @@
 import "jest";
 import React from "react";
 import Microstates from "@microstates/react";
-import { mount, stubConsoleError } from '../setupTests';
+import { stubConsoleError } from '../setupTests';
+import { mount as mountComponent } from "enzyme";
 
 it("exports Microstates", function() {
   expect(Microstates).toBeInstanceOf(Function);
 });
 
 describe("Validation", () => {
-
+  
   stubConsoleError();
+
   it("throws an exception when rendered without providing a type", () => {
     expect(() => {
-      mount(<Microstates />);
+      mountComponent(<Microstates />);
     }).toThrowError(
-      /The prop `Type` is marked as required in `Microstates`, but its value is `undefined`/
+      /Microstates expects Type prop to be specified but none was received/
     );
   });
 
-  it("throws an exception when children is not a function", () => {
+  it("throws an exception when render is not a function", () => {
     expect(() => {
-      mount(
-        <Microstates type={Number} render={<div />} />
+      mountComponent(
+        <Microstates Type={Number} render={<div />} />
       );
     }).toThrowError(
       /Failed prop type: Invalid prop `render` of type `object` supplied to `Microstates`, expected `function`/
