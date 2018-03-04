@@ -3,7 +3,6 @@ import React from "react";
 import Microstates from "@microstates/react";
 import { mount, stubConsoleError } from '../setupTests';
 
-// it('throws an error when type is not specified', () => {
 it("exports Microstates", function() {
   expect(Microstates).toBeInstanceOf(Function);
 });

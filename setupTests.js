@@ -18,14 +18,20 @@ export function stubConsoleError() {
   });
 }
 
-export function mount(element) {
+export function mount(element, component) {
   let mounted;
   beforeEach(() => {
     mounted = mountComponent(element);
+    if (component) {
+      component.mounted = mounted;
+    }
   });
   afterEach(() => {
     if (mounted) {
       mounted.unmount();
+    }
+    if (component) {
+      mounted = null;
     }
   });
 }
