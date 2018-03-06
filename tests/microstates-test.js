@@ -1,25 +1,23 @@
-import "jest";
-import React from "react";
-import Microstates from "@microstates/react";
-import { stubConsoleError } from "../setupTests";
-import { mount as mountComponent } from "enzyme";
+import 'jest';
+import React from 'react';
+import Microstates from '../src';
+import { stubConsoleError } from '../setupTests';
+import { mount as mountComponent } from 'enzyme';
 
-it("exports Microstates", function() {
+it('exports Microstates', function() {
   expect(Microstates).toBeInstanceOf(Function);
 });
 
-describe("Validation", () => {
+describe('Validation', () => {
   stubConsoleError();
 
-  it("throws an exception when rendered without providing a type", () => {
+  it('throws an exception when rendered without providing a type', () => {
     expect(() => {
       mountComponent(<Microstates />);
-    }).toThrowError(
-      /Microstates expects Type prop to be specified but none was received/
-    );
+    }).toThrowError(/Microstates expects Type prop to be specified but none was received/);
   });
 
-  it("throws an exception when render is not a function", () => {
+  it('throws an exception when render is not a function', () => {
     expect(() => {
       mountComponent(<Microstates Type={Number} render={<div />} />);
     }).toThrowError(

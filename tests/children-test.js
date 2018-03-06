@@ -1,9 +1,9 @@
-import "jest";
-import React, { Component } from "react";
-import Microstates from "@microstates/react";
-import { mount } from "../setupTests";
+import 'jest';
+import React, { Component } from 'react';
+import Microstates from '../src';
+import { mount } from '../setupTests';
 
-describe("children invocation", () => {
+describe('children invocation', () => {
   let state;
 
   const children = next => {
@@ -11,10 +11,10 @@ describe("children invocation", () => {
     return null;
   };
 
-  describe("render without value", function() {
+  describe('render without value', function() {
     mount(<Microstates Type={Number}>{children}</Microstates>);
 
-    it("sends state and actions to children", () => {
+    it('sends state and actions to children', () => {
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 0
@@ -22,14 +22,14 @@ describe("children invocation", () => {
     });
   });
 
-  describe("children invocation with value", function() {
+  describe('children invocation with value', function() {
     mount(
       <Microstates Type={Number} value={42}>
         {children}
       </Microstates>
     );
 
-    it("sends state and actions to children", () => {
+    it('sends state and actions to children', () => {
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 42
@@ -37,8 +37,8 @@ describe("children invocation", () => {
     });
   });
 
-  describe("state when children change", function() {
-    let component = {}
+  describe('state when children change', function() {
+    let component = {};
     class Modal {
       isOpen = Boolean;
     }
@@ -47,12 +47,8 @@ describe("children invocation", () => {
         {modal => {
           return (
             <div>
-              {modal.state.isOpen ? (
-                <div className="modal">Hello World!</div>
-              ) : null}
-              <button onClick={() => modal.isOpen.toggle()}>
-                {modal.state.isOpen ? "Close" : "Open"}
-              </button>
+              {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
+              <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
             </div>
           );
         }}
@@ -75,8 +71,8 @@ describe("children invocation", () => {
     describe('hiding the modal', function() {
       beforeEach(() => {
         component.mounted.find('button').simulate('click');
-      });    
-      
+      });
+
       it('hides the modal', function() {
         expect(component.mounted.find('.modal').exists()).toBe(false);
       });
@@ -85,6 +81,5 @@ describe("children invocation", () => {
         expect(component.mounted.find('button').text()).toBe('Open');
       });
     });
-
   });
 });

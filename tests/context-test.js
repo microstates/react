@@ -1,13 +1,13 @@
-import "jest";
-import React from "react";
-import Microstates, { Consumer } from "@microstates/react";
-import { mount } from "../setupTests";
+import 'jest';
+import React from 'react';
+import Microstates, { Consumer } from '../src';
+import { mount } from '../setupTests';
 
-it("it exports Consumer component", () => {
+it('it exports Consumer component', () => {
   expect(Consumer).toBeInstanceOf(Function);
 });
 
-describe("single consumer", function() {
+describe('single consumer', function() {
   let state;
 
   const children = next => {
@@ -23,7 +23,7 @@ describe("single consumer", function() {
     </Microstates>
   );
 
-  it("sends state and actions to children", () => {
+  it('sends state and actions to children', () => {
     expect(state).toMatchObject({
       increment: expect.any(Function),
       state: 0
@@ -31,7 +31,7 @@ describe("single consumer", function() {
   });
 });
 
-describe("many consumers", function() {
+describe('many consumers', function() {
   let s1, s2;
 
   const c1 = next => {
@@ -55,7 +55,7 @@ describe("many consumers", function() {
     </Microstates>
   );
 
-  it("sends state to both subscribers", () => {
+  it('sends state to both subscribers', () => {
     expect(s1).toMatchObject({
       increment: expect.any(Function),
       state: 42
@@ -67,7 +67,7 @@ describe("many consumers", function() {
   });
 });
 
-describe("many providers", () => {
+describe('many providers', () => {
   let s1, s2;
 
   const c1 = next => {
@@ -95,19 +95,19 @@ describe("many providers", () => {
     </div>
   );
 
-  it("sends state to both subscribers", () => {
+  it('sends state to both subscribers', () => {
     expect(s1).toMatchObject({
       increment: expect.any(Function),
       state: 42
     });
     expect(s2).toMatchObject({
       concat: expect.any(Function),
-      state: "hello world"
+      state: 'hello world'
     });
   });
 });
 
-describe("many providers", () => {
+describe('many providers', () => {
   let s1, s2;
 
   const c1 = next => {
@@ -137,22 +137,22 @@ describe("many providers", () => {
 
   beforeEach(() => {
     s1.increment();
-    s2.concat("!!!");
+    s2.concat('!!!');
   });
 
-  it("sends next state to both subscribers", () => {
+  it('sends next state to both subscribers', () => {
     expect(s1).toMatchObject({
       increment: expect.any(Function),
       state: 43
     });
     expect(s2).toMatchObject({
       concat: expect.any(Function),
-      state: "hello world!!!"
+      state: 'hello world!!!'
     });
   });
 });
 
-describe("state when children change", function() {
+describe('state when children change', function() {
   let component = {};
   class Modal {
     isOpen = Boolean;
@@ -164,12 +164,8 @@ describe("state when children change", function() {
           {modal => {
             return (
               <div>
-                {modal.state.isOpen ? (
-                  <div className="modal">Hello World!</div>
-                ) : null}
-                <button onClick={() => modal.isOpen.toggle()}>
-                  {modal.state.isOpen ? "Close" : "Open"}
-                </button>
+                {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
+                <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
               </div>
             );
           }}
@@ -179,29 +175,29 @@ describe("state when children change", function() {
     component
   );
 
-  it("has mounted", function() {
+  it('has mounted', function() {
     expect(component.mounted).not.toBeUndefined();
   });
 
-  it("has modal", function() {
-    expect(component.mounted.find(".modal").exists()).toBe(true);
+  it('has modal', function() {
+    expect(component.mounted.find('.modal').exists()).toBe(true);
   });
 
-  it("has button with Close", function() {
-    expect(component.mounted.find("button").text()).toBe("Close");
+  it('has button with Close', function() {
+    expect(component.mounted.find('button').text()).toBe('Close');
   });
 
-  describe("hiding the modal", function() {
+  describe('hiding the modal', function() {
     beforeEach(() => {
-      component.mounted.find("button").simulate("click");
+      component.mounted.find('button').simulate('click');
     });
 
-    it("hides the modal", function() {
-      expect(component.mounted.find(".modal").exists()).toBe(false);
+    it('hides the modal', function() {
+      expect(component.mounted.find('.modal').exists()).toBe(false);
     });
 
-    it("has button with Open", function() {
-      expect(component.mounted.find("button").text()).toBe("Open");
+    it('has button with Open', function() {
+      expect(component.mounted.find('button').text()).toBe('Open');
     });
   });
 });
