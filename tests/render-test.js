@@ -7,11 +7,7 @@ let Result = props => <div>{props.result.state}</div>;
 
 let render = next => <Result result={next} />;
 
-let wrap = props => {
-  return mount(<Microstates {...props} />);
-};
-
-export let flushPromises = () => new Promise(setImmediate);
+let wrap = props => mount(<Microstates {...props} />);
 
 describe('render without value', () => {
   it('sends state and actions to children', () => {
@@ -70,7 +66,7 @@ describe('onChange invocation', () => {
   it('sent next value to onChange', () => {
     let onChange = jest.fn();
 
-    const wrapper = wrap({
+    let wrapper = wrap({
       type: Number,
       value: 42,
       onChange,

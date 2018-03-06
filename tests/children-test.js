@@ -1,20 +1,21 @@
 import 'jest';
 import React, { Component } from 'react';
 import Microstates from '../src';
-import { mount } from '../setupTests';
+import { mount } from 'enzyme';
 
 describe('children invocation', () => {
-  let state;
+  let Result = props => <div>{props.result.state}</div>;
 
-  const children = next => {
-    state = next;
-    return null;
-  };
+  let children = next => <Result result={next} />;
+
+  let wrap = props => mount(<Microstates {...props} />);
 
   describe('render without value', function() {
-    mount(<Microstates Type={Number}>{children}</Microstates>);
-
     it('sends state and actions to children', () => {
+      let state = wrap({ Type: Number, children })
+        .find(Result)
+        .props().result;
+
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 0
@@ -23,13 +24,11 @@ describe('children invocation', () => {
   });
 
   describe('children invocation with value', function() {
-    mount(
-      <Microstates Type={Number} value={42}>
-        {children}
-      </Microstates>
-    );
-
     it('sends state and actions to children', () => {
+      let state = wrap({ Type: Number, value: 42, children })
+        .find(Result)
+        .props().result;
+
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 42
@@ -42,43 +41,43 @@ describe('children invocation', () => {
     class Modal {
       isOpen = Boolean;
     }
-    mount(
-      <Microstates Type={Modal} value={{ isOpen: true }}>
-        {modal => {
-          return (
-            <div>
-              {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
-              <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
-            </div>
-          );
-        }}
-      </Microstates>,
-      component
+
+    let Container = ({ modal }) => (
+      <div>
+        {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
+        <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
+      </div>
     );
 
+    let wrap = () =>
+      mount(
+        <Microstates Type={Modal} value={{ isOpen: true }}>
+          {modal => <Container modal={modal} />}
+        </Microstates>
+      );
+
+    let wrapper = wrap();
+
     it('has mounted', function() {
-      expect(component.mounted).not.toBeUndefined();
+      expect(wrapper.find(Container)).toHaveLength(1);
     });
 
     it('has modal', function() {
-      expect(component.mounted.find('.modal').exists()).toBe(true);
+      expect(wrapper.find('.modal')).toHaveLength(1);
     });
 
     it('has button with Close', function() {
-      expect(component.mounted.find('button').text()).toBe('Close');
+      expect(wrapper.find('button').text()).toBe('Close');
     });
 
     describe('hiding the modal', function() {
-      beforeEach(() => {
-        component.mounted.find('button').simulate('click');
-      });
+      it('hides the modal and changes button text', function() {
+        expect(wrapper.find('button').text()).toBe('Close'); // precondition
 
-      it('hides the modal', function() {
-        expect(component.mounted.find('.modal').exists()).toBe(false);
-      });
+        wrapper.find('button').simulate('click');
 
-      it('has button with Open', function() {
-        expect(component.mounted.find('button').text()).toBe('Open');
+        expect(wrapper.find('.modal')).toHaveLength(0);
+        expect(wrapper.find('button').text()).toBe('Open');
       });
     });
   });
