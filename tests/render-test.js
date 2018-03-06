@@ -3,15 +3,19 @@ import React from 'react';
 import Microstates, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
-const Result = props => <h1>{props.result && props.result.state}</h1>;
+let Result = props => <div>{props.result.state}</div>;
 
-const render = next => <Result result={next} />;
+let render = next => <Result result={next} />;
 
-const wrap = (props = {}) => mount(<Microstates {...props} />);
+let wrap = props => {
+  return mount(<Microstates {...props} />);
+};
+
+export let flushPromises = () => new Promise(setImmediate);
 
 describe('render without value', () => {
   it('sends state and actions to children', () => {
-    const state = wrap({ render, Type: Number })
+    let state = wrap({ render, Type: Number })
       .find(Result)
       .props().result;
 
@@ -23,11 +27,11 @@ describe('render without value', () => {
 });
 
 describe('children invocation with value', function() {
-  const state = wrap({ render, Type: Number, value: 42 })
-    .find(Result)
-    .props().result;
-
   it('sends state and actions to children', () => {
+    let state = wrap({ render, Type: Number, value: 42 })
+      .find(Result)
+      .props().result;
+
     expect(state).toMatchObject({
       increment: expect.any(Function),
       state: 42
@@ -37,39 +41,52 @@ describe('children invocation with value', function() {
 
 describe('using type instead of Type', () => {
   it('can use type argument instead of Type', () => {
-    const wrapper = wrap({ render, type: Number, value: 42 });
+    let wrapper = wrap({ render, type: Number, value: 42 });
 
-    expect(wrapper.find('h1').text()).toBe('42');
+    expect(wrapper.text()).toBe('42');
   });
 });
 
 describe('context', function() {
-  let component = {};
-  function Counter() {
-    return <Consumer>{m => m.state}</Consumer>;
-  }
-  mount(<Microstates type={Number} value={42} render={() => <Counter />} />, component);
   it('can use type argument instead of Type', () => {
-    expect(component.mounted.text()).toBe('42');
+    let Counter = () => {
+      return (
+        <Consumer>
+          {m => {
+            return m.state;
+          }}
+        </Consumer>
+      );
+    };
+
+    let props = { type: Number, value: 42, render: () => <Counter /> };
+    let wrapper = wrap(props);
+
+    expect(wrapper.text()).toBe('42');
   });
 });
 
 describe('onChange invocation', () => {
-  let onChange = jest.fn();
-  let component = {};
-  mount(
-    <Microstates
-      type={Number}
-      value={42}
-      onChange={onChange}
-      render={m => <button onClick={() => m.increment()}>Increment</button>}
-    />,
-    component
-  );
-  beforeEach(() => {
-    component.mounted.find('button').simulate('click');
-  });
-  it('sent next value to onChange', function() {
+  it('sent next value to onChange', () => {
+    let onChange = jest.fn();
+
+    const wrapper = wrap({
+      type: Number,
+      value: 42,
+      onChange,
+      render: m => (
+        <button
+          onClick={() => {
+            m.increment();
+          }}
+        >
+          Increment
+        </button>
+      )
+    });
+
+    wrapper.find('button').simulate('click');
+
     expect(onChange).toHaveBeenCalledWith(43);
   });
 });

@@ -25,11 +25,7 @@ export default class Microstates extends PureComponent {
   constructor(props = {}) {
     super(props);
 
-    this.state = { next: undefined };
-  }
-
-  componentDidMount() {
-    let { Type, type, children, value } = this.props;
+    let { Type, type, value } = this.props;
 
     Type = Type || type;
 
@@ -41,7 +37,12 @@ export default class Microstates extends PureComponent {
     }
 
     let microstate = create(Type, value);
-    let observable = Observable.from(microstate);
+
+    this.state = { next: microstate };
+  }
+
+  componentDidMount() {
+    let observable = Observable.from(this.state.next);
 
     this.subscription = observable.subscribe(this.onNext);
   }
