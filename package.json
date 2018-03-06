@@ -5,28 +5,18 @@
   "scripts": {
     "build": "rollup --config",
     "prepare": "npm test",
-    "test": "jest",
-    "start": "jest --watch"
+    "test": "jest --env=jsdom --config=jest.config.js",
+    "start": "npm test -- --watch"
   },
   "main": "dist/@microstates/react.umd.js",
   "module": "dist/@microstates/react.js",
   "browser": "dist/@microstates/react.umd.js",
-  "files": [
-    "dist",
-    "src",
-    "README.md"
-  ],
+  "files": ["dist", "src", "README.md"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/microstates/react.git"
   },
-  "keywords": [
-    "react",
-    "microstates",
-    "state-management",
-    "statecharts",
-    "finite-state-machine"
-  ],
+  "keywords": ["react", "microstates", "state-management", "statecharts", "finite-state-machine"],
   "author": "Taras Mankovski <taras@thisdot.co>",
   "license": "MIT",
   "bugs": {
@@ -40,10 +30,11 @@
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/preset-react": "^7.0.0-beta.40",
     "babel-core": "^7.0.0-0",
-    "babel-jest": "22.4.1",
+    "babel-jest": "^22.4.1",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "jest": "22.4.2",
+    "jest-cli": "^22.4.2",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "rollup": "0.56.3",
@@ -59,24 +50,5 @@
     "create-react-context": "0.2.1",
     "funcadelic": "0.3.2",
     "microstates": "^0.6.1"
-  },
-  "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
-    "testRegex": "(/tests/.*-test)\\.js$",
-    "globalSetup": "./build.js",
-    "watchPathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "modulePaths": [
-      "<rootDir>/src",
-      "<rootDir>/node_modules"
-    ],
-    "moduleNameMapper": {
-      "@microstates/react": "<rootDir>/dist/@microstates/react.umd.js"
-    }
   }
 }
