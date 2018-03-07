@@ -10,7 +10,7 @@ describe('children invocation', () => {
 
   let wrap = props => mount(<Microstates {...props} />);
 
-  describe('render without value', function() {
+  describe('render without value', () => {
     it('sends state and actions to children', () => {
       let state = wrap({ Type: Number, children })
         .find(Result)
@@ -23,7 +23,7 @@ describe('children invocation', () => {
     });
   });
 
-  describe('children invocation with value', function() {
+  describe('children invocation with value', () => {
     it('sends state and actions to children', () => {
       let state = wrap({ Type: Number, value: 42, children })
         .find(Result)
@@ -36,7 +36,7 @@ describe('children invocation', () => {
     });
   });
 
-  describe('state when children change', function() {
+  describe('state when children change', () => {
     let component = {};
     class Modal {
       isOpen = Boolean;
@@ -58,20 +58,20 @@ describe('children invocation', () => {
 
     let wrapper = wrap();
 
-    it('has mounted', function() {
-      expect(wrapper.find(Container)).toHaveLength(1);
+    it('has mounted', () => {
+      expect(wrapper.find(Container).exists()).toBe(true);
     });
 
-    it('has modal', function() {
-      expect(wrapper.find('.modal')).toHaveLength(1);
+    it('has modal', () => {
+      expect(wrapper.find('.modal').exists()).toBe(true);
     });
 
-    it('has button with Close', function() {
+    it('has button with Close', () => {
       expect(wrapper.find('button').text()).toBe('Close');
     });
 
-    describe('hiding the modal', function() {
-      it('hides the modal and changes button text', function() {
+    describe('hiding the modal', () => {
+      it('hides the modal and changes button text', () => {
         expect(wrapper.find('button').text()).toBe('Close'); // precondition
 
         wrapper.find('button').simulate('click');

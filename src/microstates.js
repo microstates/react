@@ -11,7 +11,7 @@ export const { Consumer } = Context;
 export default class Microstates extends PureComponent {
   static propTypes = {
     Type: PropTypes.func,
-    type: PropTypes.func.isRequired,
+    type: PropTypes.func,
     children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     render: PropTypes.func,
     value: PropTypes.any,

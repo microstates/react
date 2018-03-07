@@ -22,7 +22,7 @@ describe('render without value', () => {
   });
 });
 
-describe('children invocation with value', function() {
+describe('children invocation with value', () => {
   it('sends state and actions to children', () => {
     let state = wrap({ render, Type: Number, value: 42 })
       .find(Result)
@@ -43,7 +43,7 @@ describe('using type instead of Type', () => {
   });
 });
 
-describe('context', function() {
+describe('context', () => {
   it('can use type argument instead of Type', () => {
     let Counter = () => {
       return (
