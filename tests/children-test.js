@@ -1,20 +1,21 @@
-import "jest";
-import React, { Component } from "react";
-import Microstates from "@microstates/react";
-import { mount } from "../setupTests";
+import 'jest';
+import React, { Component } from 'react';
+import Microstates from '../src';
+import { mount } from 'enzyme';
 
-describe("children invocation", () => {
-  let state;
+describe('children invocation', () => {
+  let Result = props => <div>{props.result.state}</div>;
 
-  const children = next => {
-    state = next;
-    return null;
-  };
+  let children = next => <Result result={next} />;
 
-  describe("render without value", function() {
-    mount(<Microstates Type={Number}>{children}</Microstates>);
+  let wrap = props => mount(<Microstates {...props} />);
 
-    it("sends state and actions to children", () => {
+  describe('render without value', () => {
+    it('sends state and actions to children', () => {
+      let state = wrap({ Type: Number, children })
+        .find(Result)
+        .props().result;
+
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 0
@@ -22,14 +23,12 @@ describe("children invocation", () => {
     });
   });
 
-  describe("children invocation with value", function() {
-    mount(
-      <Microstates Type={Number} value={42}>
-        {children}
-      </Microstates>
-    );
+  describe('children invocation with value', () => {
+    it('sends state and actions to children', () => {
+      let state = wrap({ Type: Number, value: 42, children })
+        .find(Result)
+        .props().result;
 
-    it("sends state and actions to children", () => {
       expect(state).toMatchObject({
         increment: expect.any(Function),
         state: 42
@@ -37,54 +36,49 @@ describe("children invocation", () => {
     });
   });
 
-  describe("state when children change", function() {
-    let component = {}
+  describe('state when children change', () => {
+    let component = {};
     class Modal {
       isOpen = Boolean;
     }
-    mount(
-      <Microstates Type={Modal} value={{ isOpen: true }}>
-        {modal => {
-          return (
-            <div>
-              {modal.state.isOpen ? (
-                <div className="modal">Hello World!</div>
-              ) : null}
-              <button onClick={() => modal.isOpen.toggle()}>
-                {modal.state.isOpen ? "Close" : "Open"}
-              </button>
-            </div>
-          );
-        }}
-      </Microstates>,
-      component
+
+    let Container = ({ modal }) => (
+      <div>
+        {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
+        <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
+      </div>
     );
 
-    it('has mounted', function() {
-      expect(component.mounted).not.toBeUndefined();
+    let wrap = () =>
+      mount(
+        <Microstates Type={Modal} value={{ isOpen: true }}>
+          {modal => <Container modal={modal} />}
+        </Microstates>
+      );
+
+    let wrapper = wrap();
+
+    it('has mounted', () => {
+      expect(wrapper.find(Container).exists()).toBe(true);
     });
 
-    it('has modal', function() {
-      expect(component.mounted.find('.modal').exists()).toBe(true);
+    it('has modal', () => {
+      expect(wrapper.find('.modal').exists()).toBe(true);
     });
 
-    it('has button with Close', function() {
-      expect(component.mounted.find('button').text()).toBe('Close');
+    it('has button with Close', () => {
+      expect(wrapper.find('button').text()).toBe('Close');
     });
 
-    describe('hiding the modal', function() {
-      beforeEach(() => {
-        component.mounted.find('button').simulate('click');
-      });    
-      
-      it('hides the modal', function() {
-        expect(component.mounted.find('.modal').exists()).toBe(false);
+    describe('hiding the modal', () => {
+      it('hides the modal and changes button text', () => {
+        expect(wrapper.find('button').text()).toBe('Close'); // precondition
+
+        wrapper.find('button').simulate('click');
+
+        expect(wrapper.find('.modal')).toHaveLength(0);
+        expect(wrapper.find('button').text()).toBe('Open');
       });
-
-      it('has button with Open', function() {
-        expect(component.mounted.find('button').text()).toBe('Open');
-      });
     });
-
   });
 });
