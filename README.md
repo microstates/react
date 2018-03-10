@@ -1,5 +1,7 @@
 # @microstates/react
 
+[![Build Status](https://travis-ci.org/microstates/react.svg?branch=master)](https://travis-ci.org/microstates/react)
+
 Component for rendering Microstates models in React. Go to [Microstates](https://github.com/cowboyd/microstates.js) repo to learn about Microstates models.
 
 ## Installation
