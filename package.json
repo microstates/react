@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup --config",
     "prepare": "npm test",
-    "test": "jest --env=jsdom --config=jest.config.js",
+    "test": "jest --config=jest.config.js",
     "start": "npm test -- --watch"
   },
   "main": "dist/@microstates/react.umd.js",
@@ -30,7 +30,6 @@
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/preset-react": "^7.0.0-beta.40",
     "babel-core": "^7.0.0-0",
-    "babel-jest": "^22.4.1",
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "jest": "22.4.2",
