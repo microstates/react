@@ -1,6 +1,7 @@
 import 'jest';
 import React, { Component } from 'react';
 import Microstates from '../src';
+import { create } from 'microstates';
 import { mount } from 'enzyme';
 
 describe('children invocation', () => {
@@ -36,18 +37,17 @@ describe('children invocation', () => {
     });
   });
 
+  let Container = ({ modal }) => (
+    <div>
+      {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
+      <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
+    </div>
+  );
+
   describe('state when children change', () => {
-    let component = {};
     class Modal {
       isOpen = Boolean;
     }
-
-    let Container = ({ modal }) => (
-      <div>
-        {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
-        <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
-      </div>
-    );
 
     let wrap = () =>
       mount(
@@ -79,6 +79,31 @@ describe('children invocation', () => {
         expect(wrapper.find('.modal')).toHaveLength(0);
         expect(wrapper.find('button').text()).toBe('Open');
       });
+    });
+  });
+
+  describe('supports typeshifting from create', () => {
+    class MUAHAHA {
+      isOpen = Boolean;
+
+      static create(value) {
+        if (!value) {
+          return create(MUAHAHA, { isOpen: true });
+        }
+      }
+    }
+
+    let wrap = () =>
+      mount(
+        <Microstates Type={MUAHAHA}>
+          {modal => <Container modal={modal} />}
+        </Microstates>
+      );
+
+    let wrapper = wrap();
+
+    it('has modal', () => {
+      expect(wrapper.find('.modal').exists()).toBe(true);
     });
   });
 });

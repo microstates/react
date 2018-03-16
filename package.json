@@ -4,19 +4,30 @@
   "description": "Microstates Connect Component for React",
   "scripts": {
     "build": "rollup --config",
-    "prepare": "npm test",
+    "prepare": "npm run build",
+    "prepublish": "npm test",
     "test": "jest --config=jest.config.js",
     "start": "npm test -- --watch"
   },
   "main": "dist/@microstates/react.umd.js",
   "module": "dist/@microstates/react.js",
   "browser": "dist/@microstates/react.umd.js",
-  "files": ["dist", "src", "README.md"],
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/microstates/react.git"
   },
-  "keywords": ["react", "microstates", "state-management", "statecharts", "finite-state-machine"],
+  "keywords": [
+    "react",
+    "microstates",
+    "state-management",
+    "statecharts",
+    "finite-state-machine"
+  ],
   "author": "Taras Mankovski <taras@thisdot.co>",
   "license": "MIT",
   "bugs": {
@@ -48,6 +59,6 @@
     "rxjs": "6.0.0-alpha.3",
     "create-react-context": "0.2.1",
     "funcadelic": "0.3.2",
-    "microstates": "^0.6.1"
+    "microstates": "taras/microstates.js#c8883b6"
   }
 }
