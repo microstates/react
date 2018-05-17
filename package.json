@@ -45,7 +45,7 @@
     "react-dom": "16.2.0"
   },
   "dependencies": {
-    "rxjs": "6.0.0-alpha.3",
+    "rxjs": "6.1.0",
     "create-react-context": "0.2.1",
     "funcadelic": "0.3.2",
     "microstates": "^0.6.1"
