@@ -1,6 +1,6 @@
 {
   "name": "@microstates/react",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "Microstates Connect Component for React",
   "scripts": {
     "build": "rollup --config",
