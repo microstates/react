@@ -22,7 +22,7 @@ This library provides a component that takes a Microstates model type and create
 
 ### <State type={Type} value={any} render={fn} />
 
-Microstates component takes type and value arguments. Type is a class definition that describes the structure of the data. The component will instantiate this class and provide an instance. The `value` prop is used to provide initial value for the Microstates model. 
+State component takes type and value arguments. Type is a class definition that describes the structure of the data. The component will instantiate this class by passing it to `Microstates.create(Type, value)`. The `value` prop is used to provide initial value for the Microstates model. 
 
 ### `children` function
 
