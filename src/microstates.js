@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Observable } from 'rxjs';
 import { create } from 'microstates';
 import createReactContext from 'create-react-context';
+import { map } from 'funcadelic';
 
 const Context = createReactContext(null);
 
@@ -38,31 +38,28 @@ export default class Microstates extends PureComponent {
 
     let microstate = create(Type, value);
 
-    this.state = { next: microstate };
+    let state = map(tree => tree.use(this._middleware), microstate);
+
+    this.state = { value: state };
   }
 
-  componentDidMount() {
-    let observable = Observable.from(this.state.next);
+  _middleware = next => (microstate, transition, args) => {
+    let value = next(microstate, transition, args);
 
-    this.subscription = observable.subscribe(this.onNext);
-  }
-
-  componentWillUnmount() {
-    this.subscription && this.subscription.unsubscribe();
-  }
-
-  onNext = next => {
-    this.setState({ next });
+    this.setState({ value });
 
     let { onChange } = this.props;
 
-    onChange(next.valueOf());
-  };
+    onChange(value.valueOf());
 
+    return value;
+  }
+  
   render() {
-    let { children, render } = this.props;
-
-    let value = this.state.next;
+    let { 
+      props: { children, render },
+      state: { value }
+    } = this;
 
     if (render && render.call) {
       return <Context.Provider value={value}>{render(value)}</Context.Provider>;
