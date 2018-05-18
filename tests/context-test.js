@@ -1,13 +1,13 @@
 import 'jest';
 import React from 'react';
-import Microstates, { Consumer } from '../src';
+import State, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
 it('exports Consumer component', () => {
   expect(Consumer).toBeInstanceOf(Function);
 });
 
-let wrap = ({ children, ...rest }) => mount(<Microstates {...rest}>{children}</Microstates>);
+let wrap = ({ children, ...rest }) => mount(<State {...rest}>{children}</State>);
 
 let ConsumerChild = ({ selector, result, children }) => <div data-selector={selector}>{result.state}</div>;
 
@@ -21,23 +21,21 @@ describe('single consumer', function() {
   let wrapper = wrap({
     Type: Number,
     children: (
-      <Microstates Type={Number}>
+      <State Type={Number}>
         <div>
           <Consumer>{children}</Consumer>
         </div>
-      </Microstates>
+      </State>
     )
   });
 
   it('sends state and actions to children', () => {
-    let state = wrap({ Type: Number, children })
+    let number = wrap({ Type: Number, children })
       .find(ConsumerChild)
       .props().result;
 
-    expect(state).toMatchObject({
-      increment: expect.any(Function),
-      state: 0
-    });
+    expect(number.state).toBe(0);
+    expect(number.increment).toBeInstanceOf(Function);
   });
 });
 
@@ -76,15 +74,13 @@ describe('many consumers', () => {
   });
 
   it('sends state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(42);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe(42);
+    expect(c2.increment).toBeInstanceOf(Function);
   });
 });
 
@@ -103,29 +99,27 @@ describe('many providers', () => {
 
   let wrapper = mount(
     <div>
-      <Microstates Type={Number} value={42}>
+      <State Type={Number} value={42}>
         <div>
           <Consumer>{c1}</Consumer>
         </div>
-      </Microstates>
-      <Microstates Type={String} value="hello world">
+      </State>
+      <State Type={String} value="hello world">
         <div>
           <Consumer>{c2}</Consumer>
         </div>
-      </Microstates>
+      </State>
     </div>
   );
 
   it('sends state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(42);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      concat: expect.any(Function),
-      state: 'hello world'
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe('hello world');
+    expect(c2.concat).toBeInstanceOf(Function);
   });
 });
 
@@ -144,16 +138,16 @@ describe('many providers', () => {
 
   let wrapper = mount(
     <div>
-      <Microstates Type={Number} value={42}>
+      <State Type={Number} value={42}>
         <div>
           <Consumer>{c1}</Consumer>
         </div>
-      </Microstates>
-      <Microstates Type={String} value="hello world">
+      </State>
+      <State Type={String} value="hello world">
         <div>
           <Consumer>{c2}</Consumer>
         </div>
-      </Microstates>
+      </State>
     </div>
   );
 
@@ -164,12 +158,13 @@ describe('many providers', () => {
   });
 
   it('sends next state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({ increment: expect.any(Function), state: 43 });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(43);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      concat: expect.any(Function),
-      state: 'hello world!!!'
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe('hello world!!!');
+    expect(c2.concat).toBeInstanceOf(Function);
   });
 });
 
@@ -186,11 +181,11 @@ describe('state when children change', function() {
   );
 
   let wrapper = mount(
-    <Microstates Type={Modal} value={{ isOpen: true }}>
+    <State Type={Modal} value={{ isOpen: true }}>
       <div>
         <Consumer>{modal => <Container modal={modal} />}</Consumer>
       </div>
-    </Microstates>
+    </State>
   );
 
   it('has mounted', function() {

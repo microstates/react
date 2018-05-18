@@ -20,18 +20,18 @@ yarn add @microstates/react
 
 This library provides a component that takes a Microstates model type and creates an instance of the given type. The instance will be sent to one the following: `children` function, props `render` function or a context consumer.
 
-### <Microstates type={Type} value={any} render={fn} />
+### <State type={Type} value={any} render={fn} />
 
 Microstates component takes type and value arguments. Type is a class definition that describes the structure of the data. The component will instantiate this class and provide an instance. The `value` prop is used to provide initial value for the Microstates model. 
 
 ### `children` function
 
 ```js
-import Microstates from "@microstates/react";
+import State from "@microstates/react";
 
 function App() {
   return (
-    <Microstates type={Number} value={42}>
+    <State type={Number} value={42}>
       {number => {
         return (
           <div>
@@ -40,7 +40,7 @@ function App() {
           </div>
         );
       }}
-    </Microstates>
+    </State>
   );
 }
 ```
@@ -54,7 +54,7 @@ import Microstates from "@microstates/react";
 
 function App() {
   return (
-    <Microstates
+    <State
       type={Number}
       value={42}
       render={number => {
@@ -77,7 +77,7 @@ function App() {
 To use the context API, import `Consumer` component from `@microstates/react` package.
 
 ```js
-import Microstates, { Consumer } from "@microstates/react";
+import State, { Consumer } from "@microstates/react";
 
 class ModalModel {
   content = String;
@@ -108,7 +108,7 @@ function Modal() {
 
 function App() {
   return (
-    <Microstates
+    <State
       type={AppModel}
       value={{ modal: { content: "Hello World!!!" }, counter: 42 }}
     >
@@ -120,7 +120,7 @@ function App() {
           </div>
         );
       }}
-    </Microstates>
+    </State>
   );
 }
 ```
@@ -130,11 +130,11 @@ function App() {
 `onChange` prop can be used to receive the serialized value of the microstate after every state transition.
 
 ```js
-import Microstates from "@microstates/react";
+import State from "@microstates/react";
 
 function App() {
   return (
-    <Microstates type={Number} value={42} onChange={value => console.log(value)}>
+    <State type={Number} value={42} onChange={value => console.log(value)}>
       {number => {
         return (
           <div>
@@ -143,7 +143,7 @@ function App() {
           </div>
         );
       }}
-    </Microstates>
+    </State>
   );
 }
 ```

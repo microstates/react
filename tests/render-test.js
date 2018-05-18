@@ -1,37 +1,33 @@
 import 'jest';
 import React from 'react';
-import Microstates, { Consumer } from '../src';
+import State, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
 let Result = props => <div>{props.result.state}</div>;
 
 let render = next => <Result result={next} />;
 
-let wrap = props => mount(<Microstates {...props} />);
+let wrap = props => mount(<State {...props} />);
 
 describe('render without value', () => {
   it('sends state and actions to children', () => {
-    let state = wrap({ render, Type: Number })
+    let number = wrap({ render, Type: Number })
       .find(Result)
       .props().result;
 
-    expect(state).toMatchObject({
-      increment: expect.any(Function),
-      state: 0
-    });
+    expect(number.state).toBe(0);
+    expect(number.increment).toBeInstanceOf(Function);
   });
 });
 
 describe('children invocation with value', () => {
   it('sends state and actions to children', () => {
-    let state = wrap({ render, Type: Number, value: 42 })
+    let number = wrap({ render, Type: Number, value: 42 })
       .find(Result)
       .props().result;
 
-    expect(state).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    expect(number.state).toBe(42);
+    expect(number.increment).toBeInstanceOf(Function);
   });
 });
 

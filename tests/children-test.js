@@ -1,6 +1,6 @@
 import 'jest';
 import React, { Component } from 'react';
-import Microstates from '../src';
+import State from '../src';
 import { mount } from 'enzyme';
 
 describe('children invocation', () => {
@@ -8,31 +8,27 @@ describe('children invocation', () => {
 
   let children = next => <Result result={next} />;
 
-  let wrap = props => mount(<Microstates {...props} />);
+  let wrap = props => mount(<State {...props} />);
 
   describe('render without value', () => {
     it('sends state and actions to children', () => {
-      let state = wrap({ Type: Number, children })
+      let number = wrap({ Type: Number, children })
         .find(Result)
         .props().result;
 
-      expect(state).toMatchObject({
-        increment: expect.any(Function),
-        state: 0
-      });
+      expect(number.state).toBe(0);
+      expect(number.increment).toBeInstanceOf(Function);
     });
   });
 
   describe('children invocation with value', () => {
     it('sends state and actions to children', () => {
-      let state = wrap({ Type: Number, value: 42, children })
+      let number = wrap({ Type: Number, value: 42, children })
         .find(Result)
         .props().result;
 
-      expect(state).toMatchObject({
-        increment: expect.any(Function),
-        state: 42
-      });
+      expect(number.state).toBe(42);
+      expect(number.increment).toBeInstanceOf(Function);
     });
   });
 
@@ -51,9 +47,9 @@ describe('children invocation', () => {
 
     let wrap = () =>
       mount(
-        <Microstates Type={Modal} value={{ isOpen: true }}>
+        <State Type={Modal} value={{ isOpen: true }}>
           {modal => <Container modal={modal} />}
-        </Microstates>
+        </State>
       );
 
     let wrapper = wrap();

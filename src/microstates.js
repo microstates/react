@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { create } from 'microstates';
 import createReactContext from 'create-react-context';
 
@@ -42,7 +42,7 @@ export default class Microstates extends PureComponent {
   }
 
   componentDidMount() {
-    let observable = Observable.from(this.state.next);
+    let observable = from(this.state.next);
 
     this.subscription = observable.subscribe(this.onNext);
   }
