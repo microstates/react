@@ -1,13 +1,13 @@
 import 'jest';
 import React from 'react';
-import Microstates, { Consumer } from '../src';
+import State, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
 it('exports Consumer component', () => {
   expect(Consumer).toBeInstanceOf(Function);
 });
 
-let wrap = ({ children, ...rest }) => mount(<Microstates {...rest}>{children}</Microstates>);
+let wrap = ({ children, ...rest }) => mount(<State {...rest}>{children}</State>);
 
 let ConsumerChild = ({ selector, result, children }) => <div data-selector={selector}>{result.state}</div>;
 
@@ -21,11 +21,11 @@ describe('single consumer', function() {
   let wrapper = wrap({
     Type: Number,
     children: (
-      <Microstates Type={Number}>
+      <State Type={Number}>
         <div>
           <Consumer>{children}</Consumer>
         </div>
-      </Microstates>
+      </State>
     )
   });
 
@@ -99,16 +99,16 @@ describe('many providers', () => {
 
   let wrapper = mount(
     <div>
-      <Microstates Type={Number} value={42}>
+      <State Type={Number} value={42}>
         <div>
           <Consumer>{c1}</Consumer>
         </div>
-      </Microstates>
-      <Microstates Type={String} value="hello world">
+      </State>
+      <State Type={String} value="hello world">
         <div>
           <Consumer>{c2}</Consumer>
         </div>
-      </Microstates>
+      </State>
     </div>
   );
 
@@ -138,16 +138,16 @@ describe('many providers', () => {
 
   let wrapper = mount(
     <div>
-      <Microstates Type={Number} value={42}>
+      <State Type={Number} value={42}>
         <div>
           <Consumer>{c1}</Consumer>
         </div>
-      </Microstates>
-      <Microstates Type={String} value="hello world">
+      </State>
+      <State Type={String} value="hello world">
         <div>
           <Consumer>{c2}</Consumer>
         </div>
-      </Microstates>
+      </State>
     </div>
   );
 
@@ -181,11 +181,11 @@ describe('state when children change', function() {
   );
 
   let wrapper = mount(
-    <Microstates Type={Modal} value={{ isOpen: true }}>
+    <State Type={Modal} value={{ isOpen: true }}>
       <div>
         <Consumer>{modal => <Container modal={modal} />}</Consumer>
       </div>
-    </Microstates>
+    </State>
   );
 
   it('has mounted', function() {

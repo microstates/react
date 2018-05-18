@@ -1,6 +1,6 @@
 import 'jest';
 import React, { Component } from 'react';
-import Microstates from '../src';
+import State from '../src';
 import { mount } from 'enzyme';
 
 describe('children invocation', () => {
@@ -8,7 +8,7 @@ describe('children invocation', () => {
 
   let children = next => <Result result={next} />;
 
-  let wrap = props => mount(<Microstates {...props} />);
+  let wrap = props => mount(<State {...props} />);
 
   describe('render without value', () => {
     it('sends state and actions to children', () => {
@@ -47,9 +47,9 @@ describe('children invocation', () => {
 
     let wrap = () =>
       mount(
-        <Microstates Type={Modal} value={{ isOpen: true }}>
+        <State Type={Modal} value={{ isOpen: true }}>
           {modal => <Container modal={modal} />}
-        </Microstates>
+        </State>
       );
 
     let wrapper = wrap();

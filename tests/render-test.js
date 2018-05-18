@@ -1,13 +1,13 @@
 import 'jest';
 import React from 'react';
-import Microstates, { Consumer } from '../src';
+import State, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
 let Result = props => <div>{props.result.state}</div>;
 
 let render = next => <Result result={next} />;
 
-let wrap = props => mount(<Microstates {...props} />);
+let wrap = props => mount(<State {...props} />);
 
 describe('render without value', () => {
   it('sends state and actions to children', () => {
