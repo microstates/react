@@ -12,27 +12,23 @@ describe('children invocation', () => {
 
   describe('render without value', () => {
     it('sends state and actions to children', () => {
-      let state = wrap({ Type: Number, children })
+      let number = wrap({ Type: Number, children })
         .find(Result)
         .props().result;
 
-      expect(state).toMatchObject({
-        increment: expect.any(Function),
-        state: 0
-      });
+      expect(number.state).toBe(0);
+      expect(number.increment).toBeInstanceOf(Function);
     });
   });
 
   describe('children invocation with value', () => {
     it('sends state and actions to children', () => {
-      let state = wrap({ Type: Number, value: 42, children })
+      let number = wrap({ Type: Number, value: 42, children })
         .find(Result)
         .props().result;
 
-      expect(state).toMatchObject({
-        increment: expect.any(Function),
-        state: 42
-      });
+      expect(number.state).toBe(42);
+      expect(number.increment).toBeInstanceOf(Function);
     });
   });
 

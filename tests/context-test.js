@@ -30,14 +30,12 @@ describe('single consumer', function() {
   });
 
   it('sends state and actions to children', () => {
-    let state = wrap({ Type: Number, children })
+    let number = wrap({ Type: Number, children })
       .find(ConsumerChild)
       .props().result;
 
-    expect(state).toMatchObject({
-      increment: expect.any(Function),
-      state: 0
-    });
+    expect(number.state).toBe(0);
+    expect(number.increment).toBeInstanceOf(Function);
   });
 });
 
@@ -76,15 +74,13 @@ describe('many consumers', () => {
   });
 
   it('sends state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(42);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe(42);
+    expect(c2.increment).toBeInstanceOf(Function);
   });
 });
 
@@ -117,15 +113,13 @@ describe('many providers', () => {
   );
 
   it('sends state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({
-      increment: expect.any(Function),
-      state: 42
-    });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(42);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      concat: expect.any(Function),
-      state: 'hello world'
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe('hello world');
+    expect(c2.concat).toBeInstanceOf(Function);
   });
 });
 
@@ -164,12 +158,13 @@ describe('many providers', () => {
   });
 
   it('sends next state to both subscribers', () => {
-    expect(findConsumerState(wrapper, 'c1')).toMatchObject({ increment: expect.any(Function), state: 43 });
+    let c1 = findConsumerState(wrapper, 'c1');
+    expect(c1.state).toBe(43);
+    expect(c1.increment).toBeInstanceOf(Function);
 
-    expect(findConsumerState(wrapper, 'c2')).toMatchObject({
-      concat: expect.any(Function),
-      state: 'hello world!!!'
-    });
+    let c2 = findConsumerState(wrapper, 'c2');
+    expect(c2.state).toBe('hello world!!!');
+    expect(c2.concat).toBeInstanceOf(Function);
   });
 });
 
