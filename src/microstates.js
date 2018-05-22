@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { create } from 'microstates';
+import { create, map } from 'microstates';
 import createReactContext from 'create-react-context';
-import { map } from 'funcadelic';
 
 const Context = createReactContext(null);
 
