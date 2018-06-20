@@ -49,11 +49,11 @@
     "rollup": "0.56.3",
     "rollup-plugin-babel": "^4.0.0-beta.0",
     "rollup-plugin-filesize": "1.5.0",
-    "microstates": "^0.7.2"
+    "microstates": "^0.8.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
-    "microstates": "^0.7.2"
+    "microstates": "^0.8.0"
   },
   "dependencies": {
     "create-react-context": "0.2.2",

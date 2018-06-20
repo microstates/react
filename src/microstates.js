@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { create, map } from 'microstates';
+import { create, use } from 'microstates';
 import createReactContext from 'create-react-context';
 
 const Context = createReactContext(null);
@@ -37,7 +37,7 @@ export default class Microstates extends PureComponent {
 
     let microstate = create(Type, value);
 
-    let state = map(tree => tree.use(this._middleware), microstate);
+    let state = use(this._middleware, microstate);
 
     this.state = { value: state };
   }
