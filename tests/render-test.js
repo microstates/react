@@ -20,6 +20,17 @@ describe('render without value', () => {
   });
 });
 
+describe('render with from', () => {
+  it('sends state and actions to children', () => {
+    let number = wrap({ render, from: 42 })
+      .find(Result)
+      .props().result;
+
+    expect(number.state).toBe(42);
+    expect(number.increment).toBeInstanceOf(Function);
+  });
+});
+
 describe('children invocation with value', () => {
   it('sends state and actions to children', () => {
     let number = wrap({ render, Type: Number, value: 42 })
