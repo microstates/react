@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { create, use } from 'microstates';
+import { create, from } from 'microstates';
 import createReactContext from 'create-react-context';
 
 const Context = createReactContext(null);
@@ -21,37 +21,43 @@ export default class Microstates extends PureComponent {
     onChange: x => x
   };
 
+  _firstUpdate = true;
+
   constructor(props = {}) {
     super(props);
 
     let { Type, type, value } = this.props;
 
-    Type = Type || type;
+    let microstate;
 
-    // TODO: this can go if we only have type and PropTypes.func.isRequired
-    if (!Type) {
-      let name = this.displayName || this.name || Microstates.name;
-      console.error(`${name} expects Type prop to be specified but none was received.`);
-      return;
+    if (this.props.hasOwnProperty('from')) {
+      microstate = from(this.props.from);
+    } else {
+      Type = Type || type;
+
+      // TODO: this can go if we only have type and PropTypes.func.isRequired
+      if (!Type) {
+        let name = this.displayName || this.name || Microstates.name;
+        console.error(`${name} expects Type prop to be specified but none was received.`);
+        return;
+      }
+
+      microstate = create(Type, value);
     }
 
-    let microstate = create(Type, value);
+    let observable = microstate['@@observable']();
 
-    let state = use(this._middleware, microstate);
-
-    this.state = { value: state };
+    observable.subscribe(this.onUpdate);
   }
 
-  _middleware = next => (microstate, transition, args) => {
-    let value = next(microstate, transition, args);
-
-    this.setState({ value });
-
-    let { onChange } = this.props;
-
-    onChange(value.valueOf());
-
-    return value;
+  onUpdate = value => {
+    if (this._firstUpdate) {
+      this.state = { value };
+      this._firstUpdate = false;
+    } else {
+      this.setState({ value });
+      this.props.onChange(value.state);    
+    }
   }
   
   render() {
