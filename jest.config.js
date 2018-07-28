@@ -7,5 +7,6 @@ module.exports = {
   modulePaths: ['<rootDir>/src', '<rootDir>/node_modules'],
   moduleNameMapper: {
     '@microstates/react': '<rootDir>/dist/@microstates/react.umd.js'
-  }
+  },
+  testURL: 'http://localhost'
 };

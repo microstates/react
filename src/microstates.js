@@ -50,7 +50,8 @@ export default class Microstates extends PureComponent {
       this._firstUpdate = false;
     } else {
       this.setState({ value });
-      this.props.onChange(value.state);    }
+      this.props.onChange(value.state);    
+    }
   }
   
   render() {
