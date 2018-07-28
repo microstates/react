@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { create, use } from 'microstates';
+import { create } from 'microstates';
 import createReactContext from 'create-react-context';
 
 const Context = createReactContext(null);
@@ -21,6 +21,8 @@ export default class Microstates extends PureComponent {
     onChange: x => x
   };
 
+  _firstUpdate = true;
+
   constructor(props = {}) {
     super(props);
 
@@ -37,21 +39,18 @@ export default class Microstates extends PureComponent {
 
     let microstate = create(Type, value);
 
-    let state = use(this._middleware, microstate);
+    let observable = microstate['@@observable']();
 
-    this.state = { value: state };
+    observable.subscribe(this.onUpdate);
   }
 
-  _middleware = next => (microstate, transition, args) => {
-    let value = next(microstate, transition, args);
-
-    this.setState({ value });
-
-    let { onChange } = this.props;
-
-    onChange(value.valueOf());
-
-    return value;
+  onUpdate = value => {
+    if (this._firstUpdate) {
+      this.state = { value };
+      this._firstUpdate = false;
+    } else {
+      this.setState({ value });
+      this.props.onChange(value.state);    }
   }
   
   render() {
