@@ -70,7 +70,7 @@ function App() {
 }
 ```
 
-### from prop
+### `from` prop
 
 `from` prop allows you to create a microstate by providing an initial value for the microstate without providing a Type. Microstates will figure out the transitions and state from the value itself.
 
@@ -80,7 +80,7 @@ import Microstates from "@microstates/react";
 function App() {
   return (
     <State
-      value={42}
+      from={42}
       render={number => {
         return (
           <div>
