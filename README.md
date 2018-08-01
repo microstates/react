@@ -35,7 +35,7 @@ function App() {
       {number => {
         return (
           <div>
-            <span class="value">{number.state}</span>
+            <span className="value">{number.state}</span>
             <button onClick={() => number.increment()}>Increment</button>
           </div>
         );
@@ -60,7 +60,7 @@ function App() {
       render={number => {
         return (
           <div>
-            <span class="value">{number.state}</span>
+            <span className="value">{number.state}</span>
             <button onClick={() => number.increment()}>Increment</button>
           </div>
         );
@@ -84,7 +84,7 @@ function App() {
       render={number => {
         return (
           <div>
-            <span class="value">{number.state}</span>
+            <span className="value">{number.state}</span>
             <button onClick={() => number.increment()}>Increment</button>
           </div>
         );
@@ -162,7 +162,7 @@ function App() {
       {number => {
         return (
           <div>
-            <span class="value">{number.state}</span>
+            <span className="value">{number.state}</span>
             <button onClick={() => number.increment()}>Increment</button>
           </div>
         );
