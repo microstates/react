@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { create, from } from 'microstates';
+import { create, from, Store } from 'microstates';
 import createReactContext from 'create-react-context';
 
 const Context = createReactContext(null);
@@ -21,12 +21,12 @@ export default class Microstates extends PureComponent {
     onChange: x => x
   };
 
-  _firstUpdate = true;
+  state = {
+    isMounted: false
+  }
 
-  constructor(props = {}) {
-    super(props);
-
-    let { Type, type, value } = this.props;
+  constructor({ Type, type, value, onChange }) {
+    super(...arguments);
 
     let microstate;
 
@@ -45,19 +45,18 @@ export default class Microstates extends PureComponent {
       microstate = create(Type, value);
     }
 
-    let observable = microstate['@@observable']();
-
-    observable.subscribe(this.onUpdate);
+    this.state = {
+      value: Store(microstate, value => {
+        if (this.state.isMounted) {
+          this.setState({ value });
+          onChange(value);
+        }
+      })
+    }
   }
 
-  onUpdate = value => {
-    if (this._firstUpdate) {
-      this.state = { value };
-      this._firstUpdate = false;
-    } else {
-      this.setState({ value });
-      this.props.onChange(value.state);    
-    }
+  componentDidMount() {
+    this.setState({ isMounted: true });
   }
   
   render() {

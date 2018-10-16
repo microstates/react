@@ -90,6 +90,6 @@ describe('onChange invocation', () => {
 
     wrapper.find('button').simulate('click');
 
-    expect(onChange).toHaveBeenCalledWith(43);
+    expect(onChange.mock.calls[0][0].state).toBe(43);
   });
 });
