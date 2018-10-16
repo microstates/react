@@ -1,5 +1,5 @@
 import 'jest';
-import React, { Component } from 'react';
+import React from 'react';
 import State from '../src';
 import { mount } from 'enzyme';
 
@@ -40,8 +40,8 @@ describe('children invocation', () => {
 
     let Container = ({ modal }) => (
       <div>
-        {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
-        <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
+        {modal.isOpen.state ? <div className="modal">Hello World!</div> : null}
+        <button onClick={() => modal.isOpen.toggle()}>{modal.isOpen.state ? 'Close' : 'Open'}</button>
       </div>
     );
 

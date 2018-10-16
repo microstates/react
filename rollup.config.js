@@ -1,5 +1,4 @@
 const babel = require('rollup-plugin-babel');
-const filesize = require('rollup-plugin-filesize');
 const pkg = require('./package.json');
 
 const { keys } = Object;
@@ -41,11 +40,6 @@ module.exports = {
         ],
         '@babel/preset-react'
       ]
-    }),
-    filesize({
-      render(opt, size, gzip, bundle) {
-        return `Built: ${bundle.file} ( size: ${size}, gzip: ${gzip})`;
-      }
     })
   ]
 };

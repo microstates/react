@@ -3,13 +3,9 @@ import React from 'react';
 import State, { Consumer } from '../src';
 import { mount } from 'enzyme';
 
-it('exports Consumer component', () => {
-  expect(Consumer).toBeInstanceOf(Function);
-});
-
 let wrap = ({ children, ...rest }) => mount(<State {...rest}>{children}</State>);
 
-let ConsumerChild = ({ selector, result, children }) => <div data-selector={selector}>{result.state}</div>;
+let ConsumerChild = ({ selector, result }) => <div data-selector={selector}>{result.state}</div>;
 
 describe('single consumer', function() {
   let children = next => (
@@ -175,8 +171,8 @@ describe('state when children change', function() {
 
   let Container = ({ modal }) => (
     <div>
-      {modal.state.isOpen ? <div className="modal">Hello World!</div> : null}
-      <button onClick={() => modal.isOpen.toggle()}>{modal.state.isOpen ? 'Close' : 'Open'}</button>
+      {modal.isOpen.state ? <div className="modal">Hello World!</div> : null}
+      <button onClick={() => modal.isOpen.toggle()}>{modal.isOpen.state ? 'Close' : 'Open'}</button>
     </div>
   );
 
