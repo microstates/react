@@ -48,7 +48,7 @@ let initial = create(Number, 42);
 class App extends React.Component {
   // this function will be invoked when transition is called
   // it will receive the next microstate. Set it onto your state.
-  update = ({ $ }) => this.setState({ $ });
+  update = $ => this.setState({ $ });
 
   state = {
     // I'm using $ cause I'm bling like that, 
