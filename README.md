@@ -51,7 +51,7 @@ class App extends React.Component {
   update = ({ $ }) => this.setState({ $ });
 
   state = {
-    // I'm using $ cause I'm bing bling like that, 
+    // I'm using $ cause I'm bling like that, 
     // but you can use anything you want
     $: Store(initial, this.update)
   }
