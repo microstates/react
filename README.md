@@ -75,7 +75,7 @@ function App() {
 `from` prop allows you to create a microstate by providing an initial value for the microstate without providing a Type. Microstates will figure out the transitions and state from the value itself.
 
 ```js
-import Microstates from "@microstates/react";
+import State from "@microstates/react";
 
 function App() {
   return (
