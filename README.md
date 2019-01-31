@@ -1,6 +1,6 @@
 # @microstates/react
 
-[![Build Status](https://travis-ci.org/microstates/react.svg?branch=master)](https://travis-ci.org/microstates/react)
+[![Build Status](https://travis-ci.org/microstates/react.svg?branch=master)](https://travis-ci.org/microstates/react) [![Greenkeeper badge](https://badges.greenkeeper.io/microstates/react.svg)](https://greenkeeper.io/)
 
 This package provides `useType` hook for React that supports `useState` hook. 
 
