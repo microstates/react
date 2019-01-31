@@ -4,22 +4,18 @@ const pkg = require('./package.json');
 const { keys } = Object;
 
 const globals = {
-  funcadelic: 'Funcadelic',
-  react: 'React',
-  'prop-types': 'PropTypes',
-  rxjs: 'RxJS',
   microstates: 'Microstates',
-  'create-react-context': 'createReactContext'
+  react: 'React'
 };
 
 module.exports = {
-  input: 'src/index.js',
+  input: 'use-type.js',
   external: keys(globals),
   output: [
     {
       file: pkg.browser,
       format: 'umd',
-      name: 'MicrostatesReact',
+      name: 'useType',
       globals,
       exports: 'named',
       sourcemap: true
@@ -30,15 +26,13 @@ module.exports = {
     babel({
       babelrc: false,
       comments: false,
-      plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread'],
       presets: [
         [
           '@babel/preset-env',
           {
             modules: false
           }
-        ],
-        '@babel/preset-react'
+        ]
       ]
     })
   ]
