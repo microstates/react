@@ -1,11 +1,12 @@
 {
   "name": "@microstates/react",
-  "version": "0.9.0",
-  "description": "Microstates Connect Component for React",
+  "version": "0.12.0-alpha.0",
+  "description": "Provides useType hook",
   "scripts": {
     "build": "rollup --config",
-    "prepare": "npm test",
-    "test": "jest --config=jest.config.js",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "jest",
     "start": "npm test -- --watch"
   },
   "main": "dist/@microstates/react.umd.js",
@@ -13,7 +14,7 @@
   "browser": "dist/@microstates/react.umd.js",
   "files": [
     "dist",
-    "src",
+    "use-type.js",
     "README.md"
   ],
   "repository": {
@@ -27,7 +28,7 @@
     "statecharts",
     "finite-state-machine"
   ],
-  "author": "Taras Mankovski <taras@thisdot.co>",
+  "author": "Taras Mankovski <taras@frontside.io>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/microstates/react/issues"
@@ -35,28 +36,24 @@
   "homepage": "https://github.com/microstates/react#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-react": "7.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.6.0",
-    "enzyme": "3.7.0",
-    "enzyme-adapter-react-16": "1.7.0",
     "jest": "23.6.0",
-    "jest-cli": "^23.6.0",
-    "microstates": "^0.12.2",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
-    "rollup": "0.67.4",
-    "rollup-plugin-babel": "^4.0.3"
+    "microstates": "^0.12.0",
+    "react": "16.7.0-alpha.0",
+    "react-dom": "16.7.0-alpha.0",
+    "rollup": "0.67.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "@bigtest/react": "0.1.2",
+    "@bigtest/interactor": "0.9.1"
   },
   "peerDependencies": {
-    "microstates": "^0.11.0",
-    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0"
+    "microstates": "^0.12.0",
+    "react": "16.7.0-alpha.0"
   },
-  "dependencies": {
-    "create-react-context": "0.2.3",
-    "prop-types": "15.6.2"
+  "jest": {
+    "testRegex": "(\\.test)\\.js$"
   }
 }
