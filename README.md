@@ -22,6 +22,9 @@ yarn add @microstates/react
 that will re-render the component on every transition.
 
 ```jsx
+import React from 'react';
+import useType from '@microstates/react';
+
 function App() {
   let number = useType(Number, 42);
 
