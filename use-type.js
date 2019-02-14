@@ -1,10 +1,12 @@
-import { create, Store, Any } from "microstates";
-import { useState } from "react";
+import { create, Store, Any } from 'microstates';
+import { useEffect, useState, useRef } from 'react';
 
 export default function useType(Type = Any, value) {
-  let state;
+  let isMounted = useRef(true);
 
-  state = useState(() => Store(create(Type, value), next => state[1](next)));
+  let [state, setState] = useState(() => Store(create(Type, value), next => isMounted.current && setState(next)));
 
-  return state[0];
+  useEffect(() => () => (isMounted.current = false), []);
+
+  return state;
 }
