@@ -2905,10 +2905,10 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-microstates@^0.12.0:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.12.4.tgz#c9dd7786670df60b4f62c11c59084004bc18a341"
-  integrity sha512-qLWSfYlL0PD8NtAIphI37tqF5o3DSzY57BHInXJtWL4/W/ZnWNkUlTp44hrXBVzuKC2rWjygbvsjMA2fIn9Oyw==
+microstates@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/microstates/-/microstates-0.14.0.tgz#898f8cb8768d90fcffd3a2f0bf7210b88485992f"
+  integrity sha512-+urL24Ix51ZLdjxIcuKit2EN2Qr3qm1orDH3dDHKW5Tsm9FvKrsd7oyYALO+dPWaDKpFvhDnC5r1ON7QgB1kmg==
   dependencies:
     funcadelic "^0.5.0"
     symbol-observable "^1.2.0"
