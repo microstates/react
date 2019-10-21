@@ -38,7 +38,7 @@
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "7.0.0",
-    "@bigtest/interactor": "^0.9.1",
+    "@bigtest/interactor": "^0.9.3",
     "@bigtest/react": "^0.1.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.6.0",
