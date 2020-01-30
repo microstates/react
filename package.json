@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/microstates/react#readme",
   "devDependencies": {
-    "@babel/core": "^7.1.2",
+    "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "7.0.0",
     "@bigtest/interactor": "^0.9.1",
